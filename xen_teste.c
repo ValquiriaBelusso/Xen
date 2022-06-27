@@ -45,16 +45,16 @@ int main()
   //criar uma string com o parametro a ser lido ("name")
 
     /* Make space for our node on the path */
-    path = realloc(path, strlen(path) + strlen("/name") + 1);
+    path = realloc(path, strlen(path) + strlen("/memory") + 1);
     if (path == NULL) {
         printf("erro alocacao path\n");
         exit(1);
     }
 
-    strcat(path, "/name");
+    strcat(path, "/memory");
     
     /* Create a watch on /local/domain/%d/mynode. */
-    er = xs_watch(xs, path, "name");
+    er = xs_watch(xs, path, "memory");
     
     if (er == 0){
         printf("erro watch\n");
