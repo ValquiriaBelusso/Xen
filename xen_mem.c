@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 // para compilar
 // gcc xen_mem.c -o out -lxenstore
@@ -86,7 +87,7 @@ int main()
                 exit(1);
             }
 
-            //printf("vec contents: %s|%s\n", vec[XS_WATCH_PATH], vec[XS_WATCH_TOKEN]);
+            printf("vec contents: %s | %s\n", vec[XS_WATCH_PATH], vec[XS_WATCH_TOKEN]);
 
             /* Prepare a transaction and do a read. */
             th = xs_transaction_start(xs);
@@ -96,14 +97,15 @@ int main()
 
         int nbuf;
         int value = atoi(buf);
-        nbuf = value / 1024;
+        nbuf = value;
 
-        if (value >= 3774464)
+        if ((value != 0)&&(!strcmp(vec[XS_WATCH_PATH], "/local/domain/1/memory/aloca")))
         { // valor em bytes da memoria
             char command[100];
             sprintf(command, "sudo xl mem-set Xen2 %d", nbuf);
-            printf("[MEMORY REQUEST:] %d", nbuf);
+            printf("[MEMORY REQUEST:] %d\n", nbuf);fflush(stdout);
             system(command);
         }
+        //sleep(3);
     }
 }

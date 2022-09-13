@@ -7,8 +7,8 @@
 #include <stdlib.h>
 
 // para compilar
-// gcc xen_cpu.c -o out -lxenstore
-// sudo ./out
+// gcc xen_cpu.c -o cpu -lxenstore
+// sudo ./cpu
 
 // sudo xl create xen2.cfg
 // vncviewer localhost:5900
@@ -43,7 +43,7 @@ int main()
     }
 
     // /* Get the local domain path */
-    path = xs_get_domain_path(xs, 1); // alterar de 1 para o dom adequado
+    path = xs_get_domain_path(xs, 7); // alterar de 1 para o dom adequado
 
     if (path == NULL)
     {
