@@ -1,31 +1,56 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <libmalloc.h>
-#define STR_LEN 128
+#define STR_LEN 1280
 
-//gcc -I. -o str str.c libmalloc.c
+#define K 1024
+#define tempo 20
+
+//gcc -I. -o str str.c 
 // ./str
 
-int main(int argc, const char *argv[])
+void main()
 {
-        char *c;
-        char *str1 = "Hello ";
-        char *str2 = "World";
+    char *vet1;
+    char *vet2;
+    char *vet3;
+    char *vet4;
+    
+    unsigned long int size;
+    
+    size = 800000*K;
+    
+    //printf("-->%li\n", size);
+    
+    vet1=malloc(size*sizeof(char));
+    for(int i=0;i<size;i++)
+    {
+        vet1[i]=1;
+    }
+    
+   sleep(tempo);
+    
+    vet2=malloc(size*sizeof(char));
+    for(int i=0;i<size;i++)
+    {
+        vet2[i]=1;
+    }
+    
+    sleep(tempo);
 
-            
-        //allocate an empty string
-        c = emalloc(STR_LEN * sizeof(char));
-        
-        c[0] = 0x0;
-        
-
-        //and concatenate str{1,2}
-        strcat(c, str1);
-        strcat(c, str2);
-        
-        printf("New str: %s\n", c);
-
-
-        return 0;
+    vet3=malloc(size*sizeof(char));
+    for(int i=0;i<size;i++)
+    {
+        vet3[i]=1;
+    }
+    
+    sleep(tempo);
+    
+    vet4=malloc(size*sizeof(char));
+    for(int i=0;i<size;i++)
+    {
+        vet4[i]=1;
+    }
+    
+    sleep(tempo);
 }
