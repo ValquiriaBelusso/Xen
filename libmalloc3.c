@@ -95,9 +95,7 @@ void free(void* ptr)
 void *malloc(size_t size)
 {
   char command[100];
-  
-  fprintf(stderr, "1malloc(%ld)\n", size);
-  
+      
   if(size>1024)
   {
       
@@ -111,9 +109,6 @@ void *malloc(size_t size)
         
       }
       void* result = real_malloc(size);
-      fprintf(stderr, "2malloc(%ld)\n", size);
-      //fflush(stderr);
-      
       long int free_mem=0;
       long int total_mem=sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE)/1024;	
       long int mem_alocada= (size/1024) + total_mem+300000;
@@ -122,15 +117,14 @@ void *malloc(size_t size)
       free_mem=sysconf(_SC_AVPHYS_PAGES) * sysconf(_SC_PAGESIZE)/1024;
     
       if(real_malloc==NULL) {
-        mtrace_init();
+        alloc_init();
       }
    
       fprintf(stderr, "--> malloc(%li) - memoria livre: %li memoria total: %li\n",  size,free_mem,total_mem);
       
       
       if(free_mem <= mem){
-      	write(1, "-----\n", 7);  
-      	sprintf(command, "sudo xenstore-write -s /local/domain/3/memory/memalloc %ld", mem_alocada/1024);
+      	fprintf(command, "sudo xenstore-write -s /local/domain/2/memory/memalloc %ld", mem_alocada/1024);
       	system(command);
       }
       return result;
@@ -180,14 +174,51 @@ void *realloc(void* ptr, size_t size)
 //**********
 void *calloc(size_t nmemb, size_t size)
 {
-  if (alloc_init_pending) {
-    fputs("alloc.so: calloc internal\n", stderr);
-    /* Be aware of integer overflow in nmemb*size.
-     * Can only be triggered by dlsym */
-    return zalloc_internal(nmemb * size);
-  }
-  if(!real_malloc) {
-    alloc_init();
+
+  size_t newsize;
+  newsize = nmemb * size;
+  
+  char command[100];
+  
+  fprintf(stderr, "1calloc(%ld)\n", newsize);
+  
+  if(newsize>1024){
+  
+  	if (alloc_init_pending) {
+    	fputs("alloc.so: calloc internal\n", stderr);
+    	/* Be aware of integer overflow in nmemb*size.
+     	* Can only be triggered by dlsym */
+    	return zalloc_internal(nmemb * size);
+  	}
+  	
+  	if(!real_calloc) {
+    	alloc_init();
+  	}
+  
+  	void* result = real_calloc(nmemb, size);
+      	fprintf(stderr, "2calloc(%ld)\n", newsize);
+      	//fflush(stderr);
+      	
+        long int free_mem=0;
+        long int total_mem=sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE)/1024;	
+        long int mem_alocada= (newsize/1024) + total_mem+300000;
+        long int mem = total_mem - (total_mem*0.60);
+      
+        free_mem=sysconf(_SC_AVPHYS_PAGES) * sysconf(_SC_PAGESIZE)/1024;
+    
+      	if(real_calloc==NULL) {
+          alloc_init();
+      	}
+   
+        fprintf(stderr, "--> calloc(%li) - memoria livre: %li memoria total: %li\n", size,free_mem,total_mem);
+      
+      
+      if(free_mem <= mem){
+      	write(1, "-----\n", 7);  
+      	sprintf(command, "sudo xenstore-write -s /local/domain/2/memory/memalloc %ld", mem_alocada/1024);
+      	system(command);
+      }
+      
   }
   return real_calloc(nmemb, size);
 }
