@@ -138,8 +138,6 @@ void *malloc(size_t size)
       void* result = real_malloc(size);
       return result;
   }
-        
-  
       
 }
 
@@ -151,17 +149,50 @@ void *malloc(size_t size)
 //**********
 void *realloc(void* ptr, size_t size)
 {
-  if (alloc_init_pending) {
-    fputs("alloc.so: realloc internal\n", stderr);
-    if (ptr) {
-      fputs("alloc.so: realloc resizing not supported\n", stderr);
-      exit(1);
+
+  char command[100];
+
+  if(size>1024){
+
+    if (alloc_init_pending) {
+      fputs("alloc.so: realloc internal\n", stderr);
+      if (ptr) {
+        fputs("alloc.so: realloc resizing not supported\n", stderr);
+        exit(1);
+      }
+      return zalloc_internal(size);
     }
-    return zalloc_internal(size);
+
+    if(!real_malloc) {
+      alloc_init();
+    }
+    
+    void* result = real_realloc(ptr, size);
+      	fprintf(stderr, "2realloc(%ld)\n", size);
+      	//fflush(stderr);
+      	
+        long int free_mem=0;
+        long int total_mem=sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE)/1024;	
+        long int mem_alocada= (size/1024) + total_mem+300000;
+        long int mem = total_mem - (total_mem*0.60);
+      
+        free_mem=sysconf(_SC_AVPHYS_PAGES) * sysconf(_SC_PAGESIZE)/1024;
+    
+      	if(real_realloc==NULL) {
+          alloc_init();
+      	}
+   
+        fprintf(stderr, "--> realloc(%li) - memoria livre: %li memoria total: %li\n", size,free_mem,total_mem);
+      
+      
+      if(free_mem <= mem){
+      	write(1, "-----\n", 7);  
+      	sprintf(command, "sudo xenstore-write -s /local/domain/2/memory/memalloc %ld", mem_alocada/1024);
+      	system(command);
+      }
+
   }
-  if(!real_malloc) {
-    alloc_init();
-  }
+
   return real_realloc(ptr, size);
 }
 
