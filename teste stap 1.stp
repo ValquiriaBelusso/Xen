@@ -1,0 +1,47 @@
+%{
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <dlfcn.h>
+    #include <sys/mman.h>
+    #include <unistd.h>
+%}
+
+%{
+    long int free_mem = sysconf(_SC_AVPHYS_PAGES) * sysconf(_SC_PAGESIZE)/1024;
+    long int total_mem = sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE)/1024;	
+    long int mem_alocada = (size/1024) + total_mem+300000;
+    long int mem = total_mem - (total_mem*0.60);
+
+    // for memory allocation
+    if(free_mem <= mem){
+        fprintf(command, "sudo xenstore-write -s /local/domain/2/memory/memalloc %ld", mem_alocada/1024);   //change 2 to correct id from vm
+      	system(command);
+    }
+
+%}
+
+probe vm.munmap
+{
+    printf("munmap - %ld\n",length)
+}
+
+probe vm.brk
+{
+    printf("brk - %ld\n",length)
+}
+
+#for free mem
+%{
+    if(free_mem > mem) {
+        fprintf("freeing memory");
+    }
+%}
+
+probe vm.mmap
+{
+    printf("mmap - %ld %s\n",length, name)
+}
+
+
+
+
