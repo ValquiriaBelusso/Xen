@@ -1,0 +1,26 @@
+//sudo stap teste_mem.stp
+
+probe begin
+{
+    printf ("Checking memory...\n")
+}
+
+probe process("/lib/x86_64-linux-gnu/libc.so.6").function("malloc")
+{
+    sizes=sprintf("%s",substr($$parms,6,strlen($$parms)-6));
+    tam = strtol(sizes,16) //bytes 
+
+    if(tam>1000000)
+    {        
+        command = sprintf("/home/valquiria/Downloads/Systemtap/aloca %ld",tam);
+        system(command);
+        printf("%s\n", command);
+    }
+}
+
+
+
+
+
+
+
