@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #define STR_LEN 1280
 
 #define K 1024
@@ -12,23 +13,23 @@
 void main()
 {
     char *vet1;
-    char *vet2;
+    /*char *vet2;
     char *vet3;
-    char *vet4;
+    char *vet4;*/
     
     unsigned long int size;
     
-    size = 800000*K;
+    size = 80*K;
     
     //printf("-->%li\n", size);
     
     vet1=malloc(size*sizeof(char));
-    for(int i=0;i<size;i++)
+       for(int i=0;i<size;i++)
     {
         vet1[i]=1;
     }
-    
-   sleep(tempo);
+
+   /*sleep(tempo);
     
     vet2=malloc(size*sizeof(char));
     for(int i=0;i<size;i++)
@@ -52,5 +53,5 @@ void main()
         vet4[i]=1;
     }
     
-    sleep(tempo);
+    sleep(tempo);*/
 }

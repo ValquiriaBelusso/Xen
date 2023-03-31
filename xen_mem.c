@@ -12,7 +12,7 @@
 // sudo ./out
 
 // sudo xl create xen2.cfg
-//  vncviewer localhost:5900
+// vncviewer localhost:5900
 
 int main()
 {
@@ -38,10 +38,10 @@ int main()
     {
         printf("erro conexao xs\n");
         exit(1);
-    }
+    } 
 
     // /* Get the local domain path */
-    path = xs_get_domain_path(xs, 1); // alterar de 1 para o dom adequado
+    path = xs_get_domain_path(xs, 4); // alterar para o dom adequado
 
     if (path == NULL)
     {
@@ -98,12 +98,15 @@ int main()
         int nbuf;
         int value = atoi(buf);
         nbuf = value;
+        
+        //printf("%d",nbuf);
 
-        if ((value != 0)&&(!strcmp(vec[XS_WATCH_PATH], "/local/domain/1/memory/aloca")))
+        if ((value != 0)&&(!strcmp(vec[XS_WATCH_PATH], "/local/domain/4/memory/memalloc"))) // alterar de 1 para o dom adequado
         { // valor em bytes da memoria
-            char command[100];
-            sprintf(command, "sudo xl mem-set Xen2 %d", nbuf);
-            printf("[MEMORY REQUEST:] %d\n", nbuf);fflush(stdout);
+            fflush(stdout);
+            char command[200];
+            sprintf(command, "sudo xl mem-set Xen3 %d", nbuf); //conferir se o xen está corrreto
+            printf("[MEMORY REQUEST:] %d\n", nbuf);fflush(stdout);  
             system(command);
         }
         //sleep(3);
