@@ -10,10 +10,11 @@ probe process("/lib/x86_64-linux-gnu/libc.so.6").function("malloc")
     sizes=sprintf("%s",substr($$parms,6,strlen($$parms)-6));
     tam = strtol(sizes,16) //megabytes 
 
-    if(tam>1000000)
-    {        
+    if(tam>100000000)
+    {    
+    	tam = (tam / 1024);    
         printf ("Malloc...\n")
-        command = sprintf("/home/valquiria/Downloads/Systemtap/aloca %ld",tam);
+        command = sprintf("/home/teste/Downloads/systemtap/aloca %ld",tam / 1024);
         system(command);
         printf("%s\n", command);
     }
@@ -31,10 +32,11 @@ probe process("/lib/x86_64-linux-gnu/libc.so.6").function("calloc")
 
    tam=nelems2*sizeof2;
  
-   if(tam>1000000)
+   if(tam>100000000)
    {
+   	tam = (tam / 1024);
         printf ("Calloc...\n")
-        command = sprintf("/home/valquiria/Downloads/Systemtap/aloca %ld",tam);
+        command = sprintf("/home/teste/Downloads/systemtap/aloca %ld",tam/1024);
         system(command);
         printf("%s\n", command);
     }
@@ -52,10 +54,11 @@ probe process("/lib/x86_64-linux-gnu/libc.so.6").function("realloc")
 
    tam=sizeof2;   
  
-   if(tam>1000000)
+   if(tam>100000000)
    {
+   	tam = (tam / 1024);
         printf ("Realloc...\n")
-        command = sprintf("/home/valquiria/Downloads/Systemtap/aloca %ld",tam);
+        command = sprintf("/home/teste/Downloads/systemtap/aloca %ld",tam/1024);
         system(command);
         printf("%s\n", command);
     }
