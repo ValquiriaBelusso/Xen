@@ -32,7 +32,7 @@ int main ( int argc , char * argv [])
         n = strtol(argv[1], (char **) NULL , 10) ;
     }
     
-    #pragma omp parallel private (x) num_threads(4)
+    #pragma omp parallel private (x) num_threads(3)
     {
         double ini = omp_get_wtime();
         x=0;

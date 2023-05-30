@@ -3,7 +3,7 @@
 #include <math.h>
 
 //gcc -o teste1 teste1_seq.c -lm
-//./teste1 10000000
+//./teste1 100000
 
 int primo (long int n)
 {

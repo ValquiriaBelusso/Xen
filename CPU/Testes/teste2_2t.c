@@ -4,7 +4,7 @@
 #include <omp.h>
 
 //gcc -o teste2 teste2_2t.c -fopenmp -lm
-//./teste2 10000000
+//./teste2 10000000000
 
 int primo (long int n)
 {
