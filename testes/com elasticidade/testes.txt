@@ -1,0 +1,138 @@
+
+This program is part of the OpenMP Source Code Repository (OmpSCR)
+
+Program:       ./c_lu.par
+Description:   LU reduction of a dense matrix.
+
+Argument size 4096
+Argument NUMTHREADS 1
+
+Running ...
+
+Timer EXE_TIME    83.046495
+
+
+This program is part of the OpenMP Source Code Repository (OmpSCR)
+
+Program:       ./c_mandel.par
+Description:   Mandelbrot set area
+
+Argument Number of points 10000
+Argument NUMTHREADS 1
+
+Running ...
+
+Timer Total_time     1.606419
+
+
+ 	# THREADS NPOINTS AREA 			ERROR 		TIME (secs.)
+	1 	10000 	  1.504125000000   0.015041250000 	1.606419
+
+This program is part of the OpenMP Source Code Repository (OmpSCR)
+
+Program:       ./c_fft6.par
+Description:   Bailey's '6-step' Fast Fourier Transform
+
+Argument Size (a power of 2). 512
+Argument No. of iterations 10000
+Argument NUMTHREADS 1
+
+Running ...
+
+Input values:
+=============
+N           : 512
+ITERS       : 10000
+NN          : 262144
+LOGN        : 9
+LOGNN       : 18
+Memory      : 12294.00 Kbytes
+Timer Total_time   294.223270
+Timer Tpose time     0.000000
+Timer Scale time     0.000000
+Timer Column FFTs time     0.000000
+
+============================
+# THREADS : 1
+N         : 512
+ITERS     : 10000
+total TIME: 294.223270 secs.
+
+This program is part of the OpenMP Source Code Repository (OmpSCR)
+
+Program:       ./c_md.par
+Description:   Molecular dynamic simulation
+
+Argument Nparts 8192
+Argument Nsteps 60
+Argument NUMTHREADS 1
+
+Running ...
+
+Timer Total_time   167.866598
+
+
+ 	# THREADS 	TIME (secs.) 
+	 1 		    167.866598
+
+This program is part of the OpenMP Source Code Repository (OmpSCR)
+
+Program:       ./c_qsort.par
+Description:   Quicksort
+
+Argument Size (in K) 6000000
+Argument NUMTHREADS 1
+
+Running ...
+
+Array sorted.
+Array sorted.
+Array sorted.
+Array sorted.
+Array sorted.
+Array sorted.
+Array sorted.
+Array sorted.
+Array sorted.
+Array sorted.
+Timer Total_time    45.775000
+
+
+ 	# THREADS 	SIZE 	STEPS 	TIME (secs.) 
+	1 		6000000 	10 	     45.775000 
+	
+	
+	-------------------------------------------------------------------------------------------------
+	
+------Running problem size 50^3 per domain until completion
+Num processors: 1
+Num threads: 4
+Total number of elements: 125000 
+
+To run other sizes, use -s <integer>.
+To run a fixed number of iterations, use -i <integer>.
+To run a more or less balanced region set, use -b <integer>.
+To change the relative costs of regions, use -c <integer>.
+To print out progress, use -p
+To write an output file for VisIt, use -v
+See help (-h) for more options
+
+Run completed:
+   Problem size        =  50
+   MPI tasks           =  1
+   Iteration count     =  1000
+   Final Origin Energy =  8.709922e+05
+   Testing Plane 0 of Energy Array on rank 0:
+        MaxAbsDiff   = 8.731149e-11
+        TotalAbsDiff = 2.951027e-09
+        MaxRelDiff   = 1.441253e-12
+
+Elapsed time         =    1.2e+02 (s)
+Grind time (us/z/c)  = 0.99937033 (per dom)  ( 124.92129 overall)
+FOM                  =  1000.6301 (z/s)
+
+
+----------------------------------------------------------------------------
+
+ 39.791504 
+
